@@ -1,6 +1,6 @@
-import express, { Express, Request, Response } from 'express';
+import express, { Request, Response } from 'express';
 import dotenv from "dotenv";
-import { connect, disconnect } from './connect';
+import { connect, disconnect } from './database/connect';
 
 dotenv.config();
 

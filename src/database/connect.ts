@@ -1,7 +1,4 @@
 import * as Mongoose from "mongoose";
-require('dotenv').config()
-
-let database: Mongoose.Connection;
 
 export const connect = () => {
 

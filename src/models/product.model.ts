@@ -7,8 +7,8 @@ export interface IProduct extends Document {
     category: string;
     manufacturer: string;
     stockQuantity: number;
-    createDate: Date;
-    updatedDate: Date;
+    createdAt: Date;
+    updatedAt: Date;
 }
 
 const ProductSchema: Schema = new Schema({
@@ -18,8 +18,8 @@ const ProductSchema: Schema = new Schema({
     category: { type: String, required: true },
     manufacturer: { type: String, required: true },
     stockQuantity: { type: Number, required: true },
-    createDate: { type: Date, default: Date.now },
-    updatedDate: { type: Date, default: Date.now },
+    createdAt: { type: Date, default: Date.now },
+    updatedAt: { type: Date, default: Date.now },
 });
 
 export const ProductModel: Model<IProduct> = model<IProduct>('products', ProductSchema);

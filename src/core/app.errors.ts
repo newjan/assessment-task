@@ -1,5 +1,6 @@
 import Constants from './constants';
 
+// Custom Error Classes
 export class ApplicationError extends Error {
   public code = null;
 

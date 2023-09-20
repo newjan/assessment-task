@@ -3,8 +3,8 @@ import { NotFoundError, ApplicationError } from './app.errors';
 import { MongoError } from 'mongodb';
 import log from './logger';
 
+// Error Handling Middleware
 export default function (app: Application) {
-  // If you are lost
   app.use(() => {
     throw new NotFoundError('You are lost');
   });

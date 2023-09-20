@@ -8,10 +8,21 @@ import errorHandler from './core/error.handler';
 import logger from './core/logger';
 import container from './core/inversify';
 import ApplicationRouter from './router';
+import { IUser } from './models/user.model';
 dotenv.config();
+
+declare global {
+  namespace Express {
+      interface Request {
+          currentUser: IUser
+      }
+  }
+}
+
 
 async function bootstrap() {
   const app = express();
+
 
   app.disable('x-powered-by');
   app.use(compress());

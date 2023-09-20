@@ -1,6 +1,5 @@
 import { injectable, unmanaged } from 'inversify';
 import { Model, Document, FilterQuery, UpdateQuery, QueryOptions } from 'mongoose';
-import { ObjectId } from 'mongodb'; // You can still use ObjectId from mongodb
 
 /**
  * This Repository class is the base repository. It is an abstract class because it can only be

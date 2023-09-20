@@ -6,7 +6,7 @@ import isLength from "validator/lib/isLength";
 import jwt from 'jsonwebtoken';
 import UserRepository from "../repositories/user.repository";
 import IUserService from "../interfaces/user.service.interface";
-import { UserCreateDto } from "../dtos/user.dto";
+import { UserCreateDto, UserUpdateDto } from "../dtos/user.dto";
 import { BadRequestError, MissingFieldError } from "../core/app.errors";
 import Constants from "../core/constants";
 import { IUser } from "../models/user.model";
@@ -106,6 +106,9 @@ export default class UserService implements IUserService {
       username: data.username,
       email: normalizedEmail,
       password,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      address: data.address
     };
 
     await this._userRepository.create(userData);
@@ -153,5 +156,30 @@ export default class UserService implements IUserService {
 
     const token = this.generateJwtToken(user);
     return token;
+  }
+
+  public async update(id: string, data: UserUpdateDto): Promise<void> {
+    if (!id) {
+      throw new MissingFieldError("id");
+    }
+
+    const user = await this._userRepository.findById(id);
+
+    if (!user) {
+      throw new BadRequestError("User not found");
+    }
+
+    if (data.firstName) {
+      user.firstName = data.firstName;
+    }
+
+    if (data.lastName) {
+      user.lastName = data.lastName;
+    }
+
+    if (data.address) {
+      user.address = data.address;
+    }
+    await user.save();
   }
 }

@@ -11,7 +11,7 @@ export default class ProductService implements IProductService {
 
   public async create(data: ProductCreateDto): Promise<void> {
     // Implement product creation logic here using the product repository
-    // Validate and manipulate data as needed
+  // Validate and manipulate data as needed
     await this._productRepository.create(data);
   }
 

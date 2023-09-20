@@ -1,4 +1,4 @@
-import { UserCreateDto } from "../dtos/user.dto";
+import { UserCreateDto, UserUpdateDto } from "../dtos/user.dto";
 import { IUser } from "../models/user.model";
 
 /**
@@ -23,4 +23,6 @@ export default interface IUserService {
   getAll(): Promise<IUser[]>;
 
   login(email: string, password: string): Promise<string | null>;
+
+  update(id: string, data: UserUpdateDto): Promise<void>
 }

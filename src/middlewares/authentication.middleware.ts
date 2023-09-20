@@ -14,13 +14,10 @@ export const authenticateJwt = (req, res, next) => {
     if(token.includes("Bearer")){
         token = token.split(' ')[1]
     }
-    console.log(token)
     const decoded = jwt.verify(token, process.env.SECRET_KEY);
+    req.currentUser = decoded;
 
-    console.log(decoded);
-    req.user = decoded;
-
-    next(); // Proceed to the next middleware or route
+    next();
   } catch (ex) {
     throw new BadRequestError("Invalid Token");
   }

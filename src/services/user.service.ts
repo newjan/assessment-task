@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import TYPES from "../types";
 import isEmail from "validator/lib/isEmail";
 import isLength from "validator/lib/isLength";
+import jwt from 'jsonwebtoken';
 import UserRepository from "../repositories/user.repository";
 import IUserService from "../interfaces/user.service.interface";
 import { UserCreateDto } from "../dtos/user.dto";
@@ -43,6 +44,20 @@ export default class UserService implements IUserService {
     const salt = await bcrypt.genSalt(5);
     const hash = await bcrypt.hash(normalizePassword, salt);
     return hash;
+  }
+
+  private generateJwtToken(user: IUser): string {
+    const payload = {
+      id: user._id,
+      username: user.username,
+      email: user.email,
+    };
+
+    const token = jwt.sign(payload, process.env.SECRET_KEY, {
+      expiresIn: process.env.JWT_EXPIRES_IN
+    });
+
+    return token;
   }
   //#endregion
 
@@ -111,7 +126,7 @@ export default class UserService implements IUserService {
     return documents;
   }
 
-  public async login(email: string, password: string): Promise<IUser | null> {
+  public async login(email: string, password: string): Promise<string | null> {
     if (!email) {
       throw new MissingFieldError("email");
     }
@@ -136,6 +151,7 @@ export default class UserService implements IUserService {
       return null;
     }
 
-    return user;
+    const token = this.generateJwtToken(user);
+    return token;
   }
 }

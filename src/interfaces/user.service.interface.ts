@@ -22,5 +22,5 @@ export default interface IUserService {
    */
   getAll(): Promise<IUser[]>;
 
-  login(email: string, password: string): Promise<IUser | null>;
+  login(email: string, password: string): Promise<string | null>;
 }

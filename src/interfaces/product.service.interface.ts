@@ -21,4 +21,6 @@ export default interface IProductService {
    * Get all products.
    */
   getAll(): Promise<IProduct[]>;
+
+  update(id: string, data: Partial<IProduct>): Promise<IProduct | null>
 }

@@ -4,6 +4,7 @@ import TYPES from '../types';
 import BaseController from './base.controller';
 import IProductService from '../interfaces/product.service.interface';
 import { ProductCreateDto } from '../dtos/product.dto';
+import { NotFoundError } from '../core/app.errors';
 
 @injectable()
 export default class ProductController extends BaseController {
@@ -39,34 +40,24 @@ export default class ProductController extends BaseController {
     res.sendStatus(201);
   }
 
-//   public async update(req: Request, res: Response): Promise<void> {
-//     const updateProductDto: ProductCreateDto = {
-//       name: req.body.name,
-//       description: req.body.description,
-//       price: req.body.price,
-//       category: req.body.category,
-//       manufacturer: req.body.manufacturer,
-//       stockQuantity: req.body.stockQuantity,
-//     };
+  public async update(req: Request, res: Response): Promise<void> {
+    const productId = req.params.id;
+    const updateProductDto: Partial<ProductCreateDto> = {
+      name: req.body.name,
+      description: req.body.description,
+      price: req.body.price,
+      category: req.body.category,
+      manufacturer: req.body.manufacturer,
+      stockQuantity: req.body.stockQuantity,
+    };
 
-//     const updatedProduct = await this.productService.update(req.params.id, updateProductDto);
 
-//     if (!updatedProduct) {
-//       res.status(404).send('Product not found');
-//       return;
-//     }
+    const updatedProduct = await this.productService.update(productId, updateProductDto);
 
-//     res.send(updatedProduct);
-//   }
+    if (!updatedProduct) {
+      throw new NotFoundError("Product not found")
+    }
 
-//   public async delete(req: Request, res: Response): Promise<void> {
-//     const result = await this.productService.delete(req.params.id);
-
-//     if (!result) {
-//       res.status(404).send('Product not found');
-//       return;
-//     }
-
-//     res.sendStatus(204);
-//   }
+    res.send(updatedProduct);
+  }
 }

@@ -25,5 +25,15 @@ export default class ProductService implements IProductService {
     return this._productRepository.findAll();
   }
 
-  // Add more methods for updating and deleting products as needed
+  public async update(id: string, data: Partial<IProduct>): Promise<IProduct | null> {
+    const existingProduct = await this._productRepository.findById(id);
+    if (!existingProduct) {
+      return null;
+    }
+
+    const updatedProduct = await this._productRepository.update({ _id: id }, data);
+
+    return updatedProduct;
+  }
+
 }

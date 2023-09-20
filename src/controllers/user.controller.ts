@@ -50,12 +50,12 @@ export default class UserController extends BaseController {
   public async login(req: Request, res: Response) {
       const { email, password } = req.body;
 
-      const user = await this.userService.login(email, password);
+      const token = await this.userService.login(email, password);
 
-      if (!user) {
+      if (!token) {
         throw new BadRequestError("Invalid credentials");
       }
 
-      res.json({ message: "Login successful", user });
+      res.json({ message: "Login successful", token });
   }
 }

@@ -1,5 +1,5 @@
 import { injectable, unmanaged } from 'inversify';
-import { Model, Document, FilterQuery } from 'mongoose';
+import { Model, Document, FilterQuery, UpdateQuery, QueryOptions } from 'mongoose';
 import { ObjectId } from 'mongodb'; // You can still use ObjectId from mongodb
 
 /**
@@ -61,5 +61,18 @@ export default abstract class BaseRepository<T extends Document> {
 
   public async dropIndexes() {
     // You can implement index dropping logic if needed
+  }
+
+  public async update(
+    filter: FilterQuery<T>,
+    update: UpdateQuery<T>,
+    options?: QueryOptions,
+  ): Promise<T | null> {
+    const updatedDoc: T | null = await this.model.findOneAndUpdate(filter, update, {
+      new: true, // Return the updated document
+      ...options, // Additional options like upsert, timestamps, etc.
+    }).exec();
+
+    return updatedDoc;
   }
 }

@@ -9,7 +9,7 @@ export default class ProductRepository extends BaseRepository<IProduct> {
   }
 
   public async findByCategory(category: string): Promise<IProduct[]> {
-    return this.model.find({ category });
+    return this.find({ category });
   }
 
 }

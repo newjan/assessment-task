@@ -10,7 +10,25 @@ export default class UserRepository extends BaseRepository<IUser> {
   }
 
   public async findByUsername(username: string): Promise<IUser | null> {
-    return this.model.findOne({ username });
+    return this.findOne({ username });
+  }
+
+  public async isUsernameExists(username: string): Promise<boolean> {
+    const users = await this.find({ username }, { projection: { _id: 1 } });
+    if (users.length > 0) {
+      return true;
+    }
+
+    return false;
+  }
+
+  public async isEmailExists(email: string): Promise<boolean> {
+    const users = await this.find({ email }, { projection: { _id: 1 } });
+    if (users.length > 0) {
+      return true;
+    }
+
+    return false;
   }
 
 }

@@ -1,9 +1,7 @@
 import { Router } from "express";
 import { injectable, inject } from "inversify";
-import asyncWrap from "../core/asyncWrapper";
 import ProductController from "../controllers/product.controller";
 import TYPES from "../types";
-import BaseController from "../controllers/base.controller";
 import BaseRouter from "./base.router";
 
 @injectable()
